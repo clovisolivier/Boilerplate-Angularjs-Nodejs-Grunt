@@ -20,28 +20,26 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
-
-
         watch: {
             js: {
                 options: {
                     livereload: true
                 },
-                files: ['server/**', 'Gruntfile.js', '<%= tprint.app %>/**/*.js'],
+                files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
                 tasks: ['jshint', 'build']
             },
             html: {
                 options: {
                     livereload: true
                 },
-                files: ['<%= tprint.app %>/**/*.html'],
+                files: ['public/**/*.html'],
                 tasks: ['bootlint', 'build']
             },
             css: {
                 options: {
                     livereload: true
                 },
-                files: ['<%= tprint.app %>/styles/**/*.css'],
+                files: ['public/styles/**/*.css'],
                 tasks: ['csslint', 'build']
             }
         },
@@ -260,7 +258,7 @@ module.exports = function(grunt) {
                 stoponerror: false,
                 relaxerror: []
             },
-            files: ['<%= tprint.app %>/**/*.html']
+            files: ['<%= tprint.app %>/views/index.html']
         }
     });
 
