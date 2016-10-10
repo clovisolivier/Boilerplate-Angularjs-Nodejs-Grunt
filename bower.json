@@ -1,5 +1,5 @@
 {
-  "name": "codetutorial-mean-seed",
+  "name": "TPrint WebSite",
   "dependencies": {
     "angular": "latest",
     "angular-route": "latest"

@@ -1,5 +1,12 @@
 {
-  "name": "codetutorial-mean-seed",
+  "name": "tprint website",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Application pour Tprint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clovisolivier/TPrint.git"
+  },
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.12.2",
