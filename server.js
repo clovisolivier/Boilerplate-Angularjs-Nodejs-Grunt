@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 //set the public folder of the app
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/dist'));
 
 //load basic route for server
 //require('./server/routes/basic')(app);

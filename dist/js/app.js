@@ -1,1 +1,1 @@
-angular.module("myApp",["ngRoute"]).config(function(a){a.when("/",{templateUrl:"views/main.html",controller:"Admin2Ctrl"}).otherwise({redirectTo:"/"})});
+angular.module("myApp",["ngRoute"]).config(["$routeProvider",function(a){a.when("/",{templateUrl:"views/main.html",controller:"Admin2Ctrl",controllerAs:"ConfigProduitsCtrl"}).otherwise({redirectTo:"/"})}]),angular.module("myApp").controller("Admin2Ctrl",["$scope",function(a){a.value="toso"}]);

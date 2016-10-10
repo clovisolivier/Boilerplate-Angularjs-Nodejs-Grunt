@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
     // Configurable paths for the application
     var appConfig = {
-        app: require('./bower.json').appPath || 'public',
+        app: 'public',
         dist: 'dist'
     };
 
@@ -59,10 +59,10 @@ module.exports = function(grunt) {
         },
 
         uglify: {
-            dist: {
+            dist: { 
                 files: {
                     '<%= tprint.dist %>/js/app.js': [
-                        '<%= tprint.app %>/js/app.js'
+                        '.tmp/js/app.js'
                     ]
                 }
             }
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 
         concat: {
             dist: {
-                src: ['.tmp/script/**/*.js'],
+                src: ['<%= tprint.app %>/js/**/*.js'],
                 dest: '<%= tprint.dist %>/js/app.js',
             }
         },
@@ -117,8 +117,8 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= tprint.dist %>',
-                    src: ['*.html'],
+                    cwd: '<%= tprint.app %>',
+                    src: ['**/*.html'],
                     dest: '<%= tprint.dist %>'
                 }]
             }
@@ -259,11 +259,20 @@ module.exports = function(grunt) {
                 relaxerror: []
             },
             files: ['<%= tprint.app %>/views/index.html']
+        },
+        ngAnnotate: {
+        options: {
+            singleQuotes: true,
+        },
+        dist: {
+            files: {
+                 '.tmp/js/app.js' : ['<%= tprint.app %>/js/**/*.js']
+            }
         }
+    }
     });
 
-    grunt.loadNpmTasks('grunt-html');
-
+    grunt.loadNpmTasks('grunt-html'); 
 
     grunt.registerTask('default', ['express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
@@ -272,30 +281,13 @@ module.exports = function(grunt) {
     grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
 
 
-    grunt.registerTask('clean', [
-        'clean:dist'
-
-    ]);
-    grunt.registerTask('build', [
-        /* 'clean:dist',
-         /*,
-         'wiredep',
-         'useminPrepare',
-         'postcss', 
-         'ngtemplates',
-         'concat',
-         'ngAnnotate',*/
+    grunt.registerTask('build', [ 
         'concurrent:dist',
         'copy:dist',
-        /*
-            'cdnify',*/
         'cssmin',
+        'ngAnnotate',
         'concat_css',
-
         'uglify',
-        /*
-                    'filerev',
-                    'usemin',*/
         'htmlmin'
     ]);
 };

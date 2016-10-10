@@ -1,0 +1,23 @@
+angular.module('myApp', ['ngRoute'])
+.config(['$routeProvider', function($routeProvider) {
+            $routeProvider
+            .when('/', {
+                templateUrl: 'views/main.html',
+                controller: 'Admin2Ctrl',
+                controllerAs: 'ConfigProduitsCtrl'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+}]);
+/**
+ * @ngdoc function
+ * @name myApp.controller:Admin2Ctrl
+ * @description
+ * # Admin2Ctrl
+ * Controller of the myApp
+ */
+angular.module('myApp')
+    .controller('Admin2Ctrl', ['$scope', function($scope) {
+        $scope.value ='toso'; 
+    }]);
