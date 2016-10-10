@@ -27,21 +27,21 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 },
-                files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
+                files: ['server/**', 'Gruntfile.js', '<%= tprint.app %>/**/*.js'],
                 tasks: ['jshint', 'build']
             },
             html: {
                 options: {
                     livereload: true
                 },
-                files: ['public/**/*.html'],
+                files: ['<%= tprint.app %>/**/*.html'],
                 tasks: ['build']
             },
             css: {
                 options: {
                     livereload: true
                 },
-                files: ['public/styles/**/*.css'],
+                files: ['<%= tprint.app %>/styles/**/*.css'],
                 tasks: ['csslint', 'build']
             }
         },
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         // By default, your `index.html`'s <!-- Usemin block --> will take care of
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
-        
+
         cssmin: {
             dist: {
                 files: {
@@ -66,21 +66,31 @@ module.exports = function(grunt) {
                     '<%= tprint.dist %>/js/app.js': [
                         '<%= tprint.app %>/js/app.js'
                     ]
-                } 
+                }
             }
         },
 
         concat: {
             dist: {
-                src: ['public/script/**/*.js'],
+                src: ['.tmp/script/**/*.js'],
                 dest: '<%= tprint.dist %>/js/app.js',
             }
+        },
+
+        concat_css: {
+            options: {
+                // Task-specific options go here. 
+            },
+            all: {
+                src: ["<%= tprint.app %>/**/*.css"],
+                dest: ".tmp/styles.css"
+            },
         },
 
         imagemin: {
             dist: {
                 files: [{
-                    expand: true, 
+                    expand: true,
                     cwd: '<%= tprint.app %>/images',
                     src: '{,*/}*.{png,jpg,jpeg,gif}',
                     dest: '<%= tprint.dist %>/images'
@@ -169,14 +179,14 @@ module.exports = function(grunt) {
                 options: {
                     server: 'server.js',
                     hostname: 'localhost',
-                    bases: ['./public'],
+                    bases: ['./<%= tprint.app %>'],
                     livereload: true
                 }
             }
         },
 
         jshint: {
-            all: ['Gruntfile.js', 'public/scripts/**/*.js', "server.js", "server/**/*.js"]
+            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', "server.js", "server/**/*.js"]
         },
 
         htmllint: {
@@ -189,30 +199,30 @@ module.exports = function(grunt) {
                     /Bad value “{{.*}}” for attribute “.*” on element “.*”: Illegal character in path segment: “{” is not allowed./
                 ]
             },
-            src: ["public/views/*.html"]
+            src: ["<%= tprint.app %>/views/*.html"]
         },
         jsbeautifier: {
             default: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "public/**/*.js", "public/**/*.html"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
+                src: ["Gruntfile.js", "server.js", "server/**/*.js", "<%= tprint.app %>/**/*.js", "<%= tprint.app %>/**/*.html"],
+                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
 
             },
             js: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "public/js/**/*.js"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
+                src: ["Gruntfile.js", "server.js", "server/**/*.js", "<%= tprint.app %>/js/**/*.js"],
+                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
 
             },
             html: {
-                src: ["public/views/**/*.html"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"]
+                src: ["<%= tprint.app %>/views/**/*.html"],
+                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
 
             },
             css: {
-                src: ["public/styles/**/*.css"]
+                src: ["<%= tprint.app %>/styles/**/*.css"]
             },
             gitprecommit: {
-                src: ["public/scripts/**/*.js"],
-                files: ["public/bower_components/**/*.js", "public/bower_components/*.js", "public/angular/**/*.js", "public/angular/*.js"],
+                src: ["<%= tprint.app %>/scripts/**/*.js"],
+                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"],
                 options: {
                     mode: "VERIFY_ONLY"
                 }
@@ -223,15 +233,15 @@ module.exports = function(grunt) {
                 options: {
                     import: 2
                 },
-                src: ['public/styles/**/*.css']
+                src: ['<%= tprint.app %>/styles/**/*.css']
             },
             lax: {
                 options: {
                     import: false
                 },
-                src: ['public/styles/**/*.css']
+                src: ['<%= tprint.app %>/styles/**/*.css']
             }
-        },
+        }, 
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
@@ -241,7 +251,7 @@ module.exports = function(grunt) {
                 'copy:styles'
             ],
             dist: [
-                'copy:styles', 
+                'copy:styles',
                 'imagemin'
             ]
         }
@@ -275,6 +285,8 @@ module.exports = function(grunt) {
         /*
             'cdnify',*/
         'cssmin',
+        'concat_css',
+        
         'uglify',
         /*
                     'filerev',
