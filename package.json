@@ -1,5 +1,5 @@
 {
-  "name": "tprint website",
+  "name": "tprint_website",
   "private": true,
   "version": "0.1.0",
   "description": "Application pour Tprint",
@@ -11,10 +11,26 @@
   "dependencies": {
     "body-parser": "^1.12.2",
     "express": "^4.12.3",
-    "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-express": "^1.4.1",
-    "method-override": "^2.3.2",
     "mongoose": "^3.8.25"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-csslint": "^1.0.0",
+    "grunt-contrib-cssmin": "^0.12.0",
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express": "^1.4.1",
+    "grunt-html": "^8.0.2",
+    "grunt-jsbeautifier": "^0.2.13",
+    "grunt-newer": "^1.1.0",
+    "jit-grunt": "^0.9.1",
+    "method-override": "^2.3.6",
+    "time-grunt": "^1.0.0"
   }
 }
