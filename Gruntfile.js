@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: ['<%= tprint.app %>/**/*.html'],
-                tasks: ['build']
+                tasks: ['bootlint', 'build']
             },
             css: {
                 options: {
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
                 },
                 src: ['<%= tprint.app %>/styles/**/*.css']
             }
-        }, 
+        },
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
@@ -254,6 +254,13 @@ module.exports = function(grunt) {
                 'copy:styles',
                 'imagemin'
             ]
+        },
+        bootlint: {
+            options: {
+                stoponerror: false,
+                relaxerror: []
+            },
+            files: ['<%= tprint.app %>/**/*.html']
         }
     });
 
@@ -286,7 +293,7 @@ module.exports = function(grunt) {
             'cdnify',*/
         'cssmin',
         'concat_css',
-        
+
         'uglify',
         /*
                     'filerev',
