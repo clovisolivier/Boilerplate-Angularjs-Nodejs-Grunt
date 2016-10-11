@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function(grunt) {
 
     // Time how long tasks take. Can help when optimizing build times
@@ -26,7 +27,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
-                tasks: ['newer:jshint', 'build_dev']
+                tasks: ['newer:jshint', 'newer:jscs:all', 'build_dev']
             },
             html: {
                 options: {
@@ -216,6 +217,10 @@ module.exports = function(grunt) {
         },
 
         jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
             all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js']
         },
 
@@ -301,6 +306,20 @@ module.exports = function(grunt) {
                 files: {
                     '.tmp/js/app.js': ['<%= tprint.app %>/js/**/*.js']
                 }
+            }
+        },
+        // Make sure code styles are up to par
+        jscs: {
+            options: {
+                config: '.jscsrc'
+            },
+            all: {
+                src: [
+                    '<%= tprint.app %>/js/{,*/}*.js'
+                ]
+            },
+            test: {
+                src: ['test/spec/{,*/}*.js']
             }
         }
     });
