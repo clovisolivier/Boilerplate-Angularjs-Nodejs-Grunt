@@ -26,21 +26,21 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
-                tasks: ['newer:jshint', 'build']
+                tasks: ['newer:jshint', 'build_dev']
             },
-            html: { 
+            html: {
                 options: {
-                    livereload: true 
+                    livereload: true
                 },
-                files: ['public/**/*.html','public/index.html'],
-                tasks: ['newer:bootlint', 'newer:htmllint', 'build']
+                files: ['public/**/*.html', 'public/index.html'],
+                tasks: ['newer:bootlint', 'newer:htmllint', 'build_dev']
             },
             css: {
                 options: {
                     livereload: true
                 },
-                files: ['public/styles/**/*.css'],
-                tasks: ['newer:csslint', 'build']
+                files: ['public/styles/**/*.css', 'public/styles/*.css'],
+                tasks: ['newer:csslint:lax', 'build']
             }
         },
         // The following *-min tasks will produce minified files in the dist folder
@@ -80,8 +80,8 @@ module.exports = function(grunt) {
                 // Task-specific options go here. 
             },
             all: {
-                src: ["<%= tprint.app %>/**/*.css"],
-                dest: ".tmp/styles.css"
+                src: ['<%= tprint.app %>/**/*.css', '<%= tprint.app %>/*.css'],
+                dest: '.tmp/styles.css'
             },
         },
 
@@ -165,7 +165,9 @@ module.exports = function(grunt) {
                     dot: true,
                     src: [
                         '<%= tprint.dist %>/{,*/}*',
-                        '!<%= tprint.dist %>/.git{,*/}*'
+                        '!<%= tprint.dist %>/.git{,*/}*',
+                        '!<%= tprint.dist %>/bower_components{,*/}*'
+
                     ]
                 }]
             },
@@ -177,7 +179,7 @@ module.exports = function(grunt) {
                 options: {
                     server: 'server.js',
                     hostname: 'localhost',
-                    bases: ['./<%= tprint.app %>'],
+                    bases: ['<%= tprint.dist %>'],
                     livereload: true
                 }
             }
@@ -212,9 +214,9 @@ module.exports = function(grunt) {
                 }]
             }
         },
- 
+
         jshint: {
-            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', "server.js", "server/**/*.js"]
+            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js']
         },
 
         htmllint: {
@@ -227,32 +229,32 @@ module.exports = function(grunt) {
                     /Bad value “{{.*}}” for attribute “.*” on element “.*”: Illegal character in path segment: “{” is not allowed./
                 ]
             },
-            src: ["<%= tprint.app %>/views/*.html"]
+            src: ['<%= tprint.app %>/views/*.html']
         },
         jsbeautifier: {
             default: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "<%= tprint.app %>/**/*.js", "<%= tprint.app %>/**/*.html"],
-                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
+                src: ['Gruntfile.js', 'server.js', 'server/**/*.js', '<%= tprint.app %>/**/*.js', '<%= tprint.app %>/**/*.html'],
+                files: ['<%= tprint.app %>/bower_components/**/*.js', '<%= tprint.app %>/bower_components/*.js', '<%= tprint.app %>/angular/**/*.js', '<%= tprint.app %>/angular/*.js']
 
             },
             js: {
-                src: ["Gruntfile.js", "server.js", "server/**/*.js", "<%= tprint.app %>/js/**/*.js"],
-                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
+                src: ['Gruntfile.js', 'server.js', 'server/**/*.js', '<%= tprint.app %>/js/**/*.js'],
+                files: ['<%= tprint.app %>/bower_components/**/*.js', '<%= tprint.app %>/bower_components/*.js', '<%= tprint.app %>/angular/**/*.js', '<%= tprint.app %>/angular/*.js']
 
             },
             html: {
-                src: ["<%= tprint.app %>/views/**/*.html"],
-                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"]
+                src: ['<%= tprint.app %>/views/**/*.html'],
+                files: ['<%= tprint.app %>/bower_components/**/*.js', '<%= tprint.app %>/bower_components/*.js', '<%= tprint.app %>/angular/**/*.js', '<%= tprint.app %>/angular/*.js']
 
             },
             css: {
-                src: ["<%= tprint.app %>/styles/**/*.css"]
+                src: ['<%= tprint.app %>/styles/**/*.css']
             },
             gitprecommit: {
-                src: ["<%= tprint.app %>/scripts/**/*.js"],
-                files: ["<%= tprint.app %>/bower_components/**/*.js", "<%= tprint.app %>/bower_components/*.js", "<%= tprint.app %>/angular/**/*.js", "<%= tprint.app %>/angular/*.js"],
+                src: ['<%= tprint.app %>/scripts/**/*.js'],
+                files: ['<%= tprint.app %>/bower_components/**/*.js', '<%= tprint.app %>/bower_components/*.js', '<%= tprint.app %>/angular/**/*.js', '<%= tprint.app %>/angular/*.js'],
                 options: {
-                    mode: "VERIFY_ONLY"
+                    mode: 'VERIFY_ONLY'
                 }
             }
         },
@@ -279,8 +281,9 @@ module.exports = function(grunt) {
                 'copy:styles'
             ],
             dist: [
+                'jsbeautifier:default',
                 'copy:styles',
-                'imagemin'
+                'newer:imagemin'
             ]
         },
         bootlint: {
@@ -300,25 +303,37 @@ module.exports = function(grunt) {
                 }
             }
         }
-    }); 
+    });
 
     grunt.loadNpmTasks('grunt-html');
 
-    grunt.registerTask('default', ['beautify', 'build', 'express', 'watch']);
+    grunt.registerTask('default', ['build', 'express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
     grunt.registerTask('js', ['express', 'jsbeautifier:js', 'watch:js']);
     grunt.registerTask('css', ['express', 'jsbeautifier:css', 'watch:css']);
     grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
 
 
-    grunt.registerTask('build', [
+    grunt.registerTask('build_dev', [
         'newer:concurrent:dist',
         'newer:copy:dist',
         'newer:ngAnnotate',
-        'newer:concat_css',
+        'concat_css',
         'newer:postcss:dist',
         'newer:cssmin',
         'newer:uglify',
         'newer:htmlmin'
+    ]);
+
+    grunt.registerTask('build', [
+        'clean:dist',
+        'concurrent:dist',
+        'copy:dist',
+        'ngAnnotate',
+        'concat_css',
+        'postcss:dist',
+        'cssmin',
+        'uglify',
+        'htmlmin'
     ]);
 };
