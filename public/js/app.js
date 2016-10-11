@@ -1,6 +1,6 @@
 angular.module('myApp', ['ngRoute'])
-.config(function($routeProvider) {
-            $routeProvider
+    .config(function($routeProvider) {
+        $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'Admin2Ctrl',
@@ -9,4 +9,4 @@ angular.module('myApp', ['ngRoute'])
             .otherwise({
                 redirectTo: '/'
             });
-});
+    });

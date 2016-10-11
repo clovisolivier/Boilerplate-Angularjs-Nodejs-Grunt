@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: ['public/**/*.html'],
-                tasks: ['bootlint', 'build']
+                tasks: ['bootlint', 'htmllint', 'build']
             },
             css: {
                 options: {
@@ -52,14 +52,14 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     '<%= tprint.dist %>/styles/main.css': [
-                        '<%= tprint.app %>/styles/{,*/}*.css'
+                        '.tmp/styles/{,*/}*.css'
                     ]
                 }
             }
         },
 
         uglify: {
-            dist: { 
+            dist: {
                 files: {
                     '<%= tprint.dist %>/js/app.js': [
                         '.tmp/js/app.js'
@@ -183,6 +183,36 @@ module.exports = function(grunt) {
             }
         },
 
+        // Add vendor prefixed styles
+        postcss: {
+            options: {
+                processors: [
+                    require('autoprefixer')({
+                        browsers: ['last 1 version']
+                    })
+                ]
+            },
+            server: {
+                options: {
+                    map: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/styles/',
+                    src: '{,*/}*.css',
+                    dest: '.tmp/styles/'
+                }]
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/styles/',
+                    src: '{,*/}*.css',
+                    dest: '.tmp/styles/'
+                }]
+            }
+        },
+
         jshint: {
             all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', "server.js", "server/**/*.js"]
         },
@@ -261,32 +291,33 @@ module.exports = function(grunt) {
             files: ['<%= tprint.app %>/views/index.html']
         },
         ngAnnotate: {
-        options: {
-            singleQuotes: true,
-        },
-        dist: {
-            files: {
-                 '.tmp/js/app.js' : ['<%= tprint.app %>/js/**/*.js']
+            options: {
+                singleQuotes: true,
+            },
+            dist: {
+                files: {
+                    '.tmp/js/app.js': ['<%= tprint.app %>/js/**/*.js']
+                }
             }
         }
-    }
     });
 
-    grunt.loadNpmTasks('grunt-html'); 
+    grunt.loadNpmTasks('grunt-html');
 
-    grunt.registerTask('default', ['express', 'watch']);
+    grunt.registerTask('default', ['beautify', 'build', 'express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
     grunt.registerTask('js', ['express', 'jsbeautifier:js', 'watch:js']);
     grunt.registerTask('css', ['express', 'jsbeautifier:css', 'watch:css']);
     grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
 
 
-    grunt.registerTask('build', [ 
+    grunt.registerTask('build', [
         'concurrent:dist',
         'copy:dist',
-        'cssmin',
         'ngAnnotate',
         'concat_css',
+        'postcss:dist',
+        'cssmin',
         'uglify',
         'htmlmin'
     ]);
