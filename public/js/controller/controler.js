@@ -7,5 +7,5 @@
  */
 angular.module('myApp')
     .controller('Admin2Ctrl', function($scope) {
-        $scope.value = 'tollo';
+        $scope.value = 'mailo';
     });

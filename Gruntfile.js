@@ -5,7 +5,10 @@ module.exports = function(grunt) {
     require('time-grunt')(grunt);
 
     // Automatically load required Grunt tasks
-    require('jit-grunt')(grunt);
+    require('jit-grunt')(grunt, {
+        ngtemplates: 'grunt-angular-templates'
+
+    });
 
 
     // Configurable paths for the application
@@ -64,6 +67,9 @@ module.exports = function(grunt) {
                 files: {
                     '<%= tprint.dist %>/js/app.js': [
                         '.tmp/js/app.js'
+                    ],
+                    '<%= tprint.dist %>/js/views.js': [
+                        '.tmp/views/templateCache.js'
                     ]
                 }
             }
@@ -119,7 +125,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= tprint.app %>',
-                    src: ['**/*.html'],
+                    src: ['*.html'],
                     dest: '<%= tprint.dist %>'
                 }]
             }
@@ -321,7 +327,18 @@ module.exports = function(grunt) {
             test: {
                 src: ['test/spec/{,*/}*.js']
             }
-        }
+        },
+        ngtemplates: {
+            dist: {
+                options: {
+                    module: 'myApp',
+                    htmlmin: '<%= htmlmin.dist.options %>'
+                },
+                cwd: '<%= tprint.app %>',
+                src: 'views/{,*/}*.html',
+                dest: '.tmp/views/templateCache.js'
+            }
+        },
     });
 
     grunt.loadNpmTasks('grunt-html');
@@ -340,6 +357,7 @@ module.exports = function(grunt) {
         'concat_css',
         'newer:postcss:dist',
         'newer:cssmin',
+        'ngtemplates',
         'newer:uglify',
         'newer:htmlmin'
     ]);
@@ -352,6 +370,7 @@ module.exports = function(grunt) {
         'concat_css',
         'postcss:dist',
         'cssmin',
+        'ngtemplates',
         'uglify',
         'htmlmin'
     ]);

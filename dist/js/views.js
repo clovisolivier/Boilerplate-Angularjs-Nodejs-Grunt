@@ -1,0 +1,1 @@
+angular.module("myApp").run(["$templateCache",function(a){"use strict";a.put("views/main.html",'<!DOCTYPE html> <div class="row"> <h1 class="toto tati col-md-4">{{value}}</h1> <h1 class="toto col-md-7">{{value}}</h1> <h1 class="tata col-md-1">{{value}}</h1> </div>')}]);
