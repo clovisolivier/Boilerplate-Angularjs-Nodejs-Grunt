@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 },
-                files: ['public/**/*.html'],
+                files: ['public/**/*.html','public/index.html'],
                 tasks: ['bootlint', 'htmllint', 'build']
             },
             css: {
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
                 }]
             }
         },
-
+ 
         jshint: {
             all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', "server.js", "server/**/*.js"]
         },
@@ -288,7 +288,7 @@ module.exports = function(grunt) {
                 stoponerror: false,
                 relaxerror: []
             },
-            files: ['<%= tprint.app %>/views/index.html']
+            files: ['<%= tprint.app %>/index.html']
         },
         ngAnnotate: {
             options: {
