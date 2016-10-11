@@ -6,8 +6,8 @@ module.exports = function(grunt) {
 
     // Automatically load required Grunt tasks
     require('jit-grunt')(grunt, {
-        ngtemplates: 'grunt-angular-templates'
-
+        ngtemplates: 'grunt-angular-templates',
+        htmllint: 'grunt-html'
     });
 
 
@@ -24,6 +24,7 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        // Watch modified files and launch associates tasks
         watch: {
             js: {
                 options: {
@@ -52,6 +53,7 @@ module.exports = function(grunt) {
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
 
+        // minify css from tmp to dist
         cssmin: {
             dist: {
                 files: {
@@ -61,7 +63,8 @@ module.exports = function(grunt) {
                 }
             }
         },
-
+        
+        // uglify JS and html JS to tmp to dist
         uglify: {
             dist: {
                 files: {
@@ -75,6 +78,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // Concat JS files public to dist
         concat: {
             dist: {
                 src: ['<%= tprint.app %>/js/**/*.js'],
@@ -82,6 +86,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // Concat css files public to tmp
         concat_css: {
             options: {
                 // Task-specific options go here. 
@@ -92,6 +97,7 @@ module.exports = function(grunt) {
             },
         },
 
+        // minify images from public to dist
         imagemin: {
             dist: {
                 files: [{
@@ -103,6 +109,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // minify svg from public to dist    
         svgmin: {
             dist: {
                 files: [{
@@ -114,6 +121,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // minify index.html from public to dist
         htmlmin: {
             dist: {
                 options: {
@@ -181,6 +189,7 @@ module.exports = function(grunt) {
             server: '.tmp'
         },
 
+        // run local server
         express: {
             all: {
                 options: {
@@ -222,6 +231,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // Analyse JS style
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
@@ -230,6 +240,7 @@ module.exports = function(grunt) {
             all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js']
         },
 
+        // Analyse HTML style
         htmllint: {
             options: {
                 force: true,
@@ -242,6 +253,8 @@ module.exports = function(grunt) {
             },
             src: ['<%= tprint.app %>/views/*.html']
         },
+
+        //Format JS files
         jsbeautifier: {
             default: {
                 src: ['Gruntfile.js', 'server.js', 'server/**/*.js', '<%= tprint.app %>/**/*.js', '<%= tprint.app %>/**/*.html'],
@@ -269,6 +282,8 @@ module.exports = function(grunt) {
                 }
             }
         },
+
+        // Analyse css style
         csslint: {
             strict: {
                 options: {
@@ -297,6 +312,8 @@ module.exports = function(grunt) {
                 'newer:imagemin'
             ]
         },
+
+        // Analyse bootstrap style
         bootlint: {
             options: {
                 stoponerror: false,
@@ -314,6 +331,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         // Make sure code styles are up to par
         jscs: {
             options: {
@@ -328,6 +346,7 @@ module.exports = function(grunt) {
                 src: ['test/spec/{,*/}*.js']
             }
         },
+        //convert HTML files to JS
         ngtemplates: {
             dist: {
                 options: {
@@ -338,10 +357,8 @@ module.exports = function(grunt) {
                 src: 'views/{,*/}*.html',
                 dest: '.tmp/views/templateCache.js'
             }
-        },
+        }, 
     });
-
-    grunt.loadNpmTasks('grunt-html');
 
     grunt.registerTask('default', ['build', 'express', 'watch']);
     grunt.registerTask('beautify', ['jsbeautifier:default']);
