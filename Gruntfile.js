@@ -26,21 +26,21 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
-                tasks: ['jshint', 'build']
+                tasks: ['newer:jshint', 'build']
             },
-            html: {
+            html: { 
                 options: {
-                    livereload: true
+                    livereload: true 
                 },
                 files: ['public/**/*.html','public/index.html'],
-                tasks: ['bootlint', 'htmllint', 'build']
+                tasks: ['newer:bootlint', 'newer:htmllint', 'build']
             },
             css: {
                 options: {
                     livereload: true
                 },
                 files: ['public/styles/**/*.css'],
-                tasks: ['csslint', 'build']
+                tasks: ['newer:csslint', 'build']
             }
         },
         // The following *-min tasks will produce minified files in the dist folder
@@ -300,7 +300,7 @@ module.exports = function(grunt) {
                 }
             }
         }
-    });
+    }); 
 
     grunt.loadNpmTasks('grunt-html');
 
@@ -312,13 +312,13 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('build', [
-        'concurrent:dist',
-        'copy:dist',
-        'ngAnnotate',
-        'concat_css',
-        'postcss:dist',
-        'cssmin',
-        'uglify',
-        'htmlmin'
+        'newer:concurrent:dist',
+        'newer:copy:dist',
+        'newer:ngAnnotate',
+        'newer:concat_css',
+        'newer:postcss:dist',
+        'newer:cssmin',
+        'newer:uglify',
+        'newer:htmlmin'
     ]);
 };
