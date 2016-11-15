@@ -63,7 +63,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        
+
         // uglify JS and html JS to tmp to dist
         uglify: {
             dist: {
@@ -357,16 +357,25 @@ module.exports = function(grunt) {
                 src: 'views/{,*/}*.html',
                 dest: '.tmp/views/templateCache.js'
             }
-        }, 
+        },
     });
 
+    // default grunt task
     grunt.registerTask('default', ['build', 'express', 'watch']);
+
+    // beautify all Code
     grunt.registerTask('beautify', ['jsbeautifier:default']);
+
+    // beautify js files
     grunt.registerTask('js', ['express', 'jsbeautifier:js', 'watch:js']);
+
+    // beautify css files
     grunt.registerTask('css', ['express', 'jsbeautifier:css', 'watch:css']);
+
+    // beautify html files
     grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
 
-
+    // tasks apply only on updated files
     grunt.registerTask('build_dev', [
         'newer:concurrent:dist',
         'newer:copy:dist',
@@ -379,6 +388,7 @@ module.exports = function(grunt) {
         'newer:htmlmin'
     ]);
 
+    // tasks apply on all files
     grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',

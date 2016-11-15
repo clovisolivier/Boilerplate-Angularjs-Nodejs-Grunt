@@ -1,10 +1,14 @@
 angular.module('myApp', ['ngRoute'])
     .config(function($routeProvider) {
+        //Define routes 
         $routeProvider
             .when('/', {
+                //HTML content loaded 
                 templateUrl: 'views/main.html',
-                controller: 'Admin2Ctrl',
-                controllerAs: 'ConfigProduitsCtrl'
+                //controller use in the main page 
+                controller: 'MainCtrl',
+                //Alias for the controller
+                controllerAs: 'MainCtrl'
             })
             .otherwise({
                 redirectTo: '/'

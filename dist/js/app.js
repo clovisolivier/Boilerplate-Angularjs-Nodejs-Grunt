@@ -1,1 +1,1 @@
-angular.module("myApp",["ngRoute"]).config(["$routeProvider",function(a){a.when("/",{templateUrl:"views/main.html",controller:"Admin2Ctrl",controllerAs:"ConfigProduitsCtrl"}).otherwise({redirectTo:"/"})}]),angular.module("myApp").controller("Admin2Ctrl",["$scope",function(a){a.value="mailo"}]);
+angular.module("myApp",["ngRoute"]).config(["$routeProvider",function(a){a.when("/",{templateUrl:"views/main.html",controller:"MainCtrl",controllerAs:"MainCtrl"}).otherwise({redirectTo:"/"})}]),angular.module("myApp").controller("MainCtrl",["$scope",function(a){a.value="MainPage"}]);

@@ -1,11 +1,12 @@
 /**
  * @ngdoc function
- * @name myApp.controller:Admin2Ctrl
+ * @name myApp.controller:MainCtrl
  * @description
- * # Admin2Ctrl
+ * # MainCtrl
  * Controller of the myApp
  */
 angular.module('myApp')
-    .controller('Admin2Ctrl', function($scope) {
-        $scope.value = 'mailo';
+    // This file should be added on index.html
+    .controller('MainCtrl', function($scope) {
+        $scope.value = 'MainPage';
     });
