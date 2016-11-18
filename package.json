@@ -1,11 +1,11 @@
 {
-  "name": "tprint_website",
+  "name": "boilerplate-angularjs-nodejs-grunt",
   "private": true,
   "version": "0.1.0",
-  "description": "Application pour Tprint",
+  "description": "Boilerplate angularjs nodejs and express app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clovisolivier/TPrint.git"
+    "url": "https://github.com/clovisolivier/Boilerplate-Angularjs-Nodejs-Grunt"
   },
   "main": "server.js",
   "dependencies": {
