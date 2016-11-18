@@ -4,3 +4,4 @@ public/bower_components
 .bower-*
 .idea
 .tmp
+.bower-

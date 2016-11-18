@@ -1,13 +1,24 @@
 {
   "name": "boilerplate-angularjs-nodejs-grunt",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "author": "Clovis OLIVIER",
+  "license": "MIT",
   "description": "Boilerplate angularjs nodejs and express app",
   "repository": {
     "type": "git",
     "url": "https://github.com/clovisolivier/Boilerplate-Angularjs-Nodejs-Grunt"
   },
+  "keywords": [
+    "boilerplate",
+    "angularjs",
+    "nodejs",
+    "express"
+  ],
   "main": "server.js",
+   "scripts": {
+    "postinstall": "bower install"
+  },
   "dependencies": {
     "graceful-fs": "^4.0.0",
     "minimatch": "^3.0.2",
