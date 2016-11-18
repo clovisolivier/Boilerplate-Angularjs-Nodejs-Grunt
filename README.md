@@ -27,10 +27,6 @@ grunt
 App starting on http://localhost:3000/#/ 
 
 
-# Deploy on heroku
-
-This app is fully deployable on Heroku. Follow https://devcenter.heroku.com/articles/git indications.
-
 # Hints
 
 - Scripts are in `public/js`
