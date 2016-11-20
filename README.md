@@ -27,6 +27,18 @@ grunt
 App starting on http://localhost:3000/#/ 
 
 
+# Test
+
+Run tests with Grunt.
+
+```
+grunt test
+```
+
+Default grunt tast also run karma tests
+
+Karma starting on http://localhost:8080/#/ 
+
 # Hints
 
 - Scripts are in `public/js`

@@ -1,3 +1,11 @@
+/**
+ * @ngdoc overview
+ * @name myApp
+ * @description
+ * # myApp
+ *
+ * Main module of the application.
+ */
 angular.module('myApp', ['ngRoute'])
     .config(function($routeProvider) {
         //Define routes 

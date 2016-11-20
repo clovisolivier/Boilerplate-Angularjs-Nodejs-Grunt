@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @ngdoc function
  * @name myApp.controller:MainCtrl

@@ -26,12 +26,16 @@ module.exports = function(grunt) {
 
         // Watch modified files and launch associates tasks
         watch: {
+            jsTest: {
+                files: ['test/**/*.test.js'],
+                tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
+            },
             js: {
                 options: {
                     livereload: true
                 },
                 files: ['server/**', 'Gruntfile.js', 'public/**/*.js'],
-                tasks: ['newer:jshint', 'newer:jscs:all', 'build_dev']
+                tasks: ['newer:jshint', 'newer:jscs:all', 'karma', 'build_dev']
             },
             html: {
                 options: {
@@ -46,6 +50,15 @@ module.exports = function(grunt) {
                 },
                 files: ['public/styles/**/*.css', 'public/styles/*.css'],
                 tasks: ['newer:csslint:lax', 'build']
+            }
+        },
+
+        // Execute TU 
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js',
+                background: true,
+                singleRun: false
             }
         },
         // The following *-min tasks will produce minified files in the dist folder
@@ -237,7 +250,9 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js']
+            all: ['Gruntfile.js', '<%= tprint.app %>/scripts/**/*.js', 'server.js', 'server/**/*.js'],
+
+            test: ['<%= tprint.app %>/{,*/}*.test.js'],
         },
 
         // Analyse HTML style
@@ -361,7 +376,7 @@ module.exports = function(grunt) {
     });
 
     // default grunt task
-    grunt.registerTask('default', ['build', 'express', 'watch']);
+    grunt.registerTask('default', ['build', 'express', 'karma', 'watch']);
 
     // beautify all Code
     grunt.registerTask('beautify', ['jsbeautifier:default']);
@@ -374,6 +389,9 @@ module.exports = function(grunt) {
 
     // beautify html files
     grunt.registerTask('html', ['express', 'jsbeautifier:html', 'watch:html']);
+
+
+    grunt.registerTask('test', ['karma']);
 
     // tasks apply only on updated files
     grunt.registerTask('build_dev', [
