@@ -27,9 +27,9 @@ grunt
 App starting on http://localhost:3000/#/ 
 
 
-# Test
+# Test 
 
-Run tests with Grunt.
+Run tests with Karma.
 
 ```
 grunt test
@@ -45,7 +45,8 @@ Karma starting on http://localhost:8080/#/
 - Views are in `public/views` 
 - Styles are in `public/styles` 
 - final files are in `dist`
-
+- Tests files are in 'test/'
+ 
 
 # Release notes
 
