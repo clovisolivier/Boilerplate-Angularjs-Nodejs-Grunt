@@ -1,7 +1,7 @@
 {
   "name": "boilerplate-angularjs-nodejs-grunt",
-  "private": true,
-  "version": "0.0.1",
+  "private": false,
+  "version": "0.0.2",
   "author": "Clovis OLIVIER",
   "license": "MIT",
   "description": "Boilerplate angularjs nodejs and express app",
@@ -13,7 +13,8 @@
     "boilerplate",
     "angularjs",
     "nodejs",
-    "express"
+    "express",
+    "karma"
   ],
   "main": "server.js",
   "dependencies": {
